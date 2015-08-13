@@ -137,6 +137,8 @@ FIND_PACKAGE(Qt4 REQUIRED)
 ADD_DEFINITIONS(${QT_DEFINITIONS})
 FIND_PACKAGE(Graphviz REQUIRED)
 
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+
 ######################
 #
 # include source tree
@@ -146,6 +148,8 @@ SET(libqgv_SOURCE_DIR ${CMAKE_SOURCE_DIR}/QGVCore)
 SET(libqgv_BINARY_DIR ${CMAKE_BINARY_DIR}/QGVCore)
 ADD_SUBDIRECTORY(QGVCore)
 ADD_SUBDIRECTORY(Sample)
+ADD_SUBDIRECTORY(MapEditor)
+
 
 ######################
 #
@@ -216,6 +220,7 @@ SET(CPACK_COMPONENTS_ALL
   ${external_DLL}
   headerfiles
 	sample
+    mapeditor
 )
 
 # License file
@@ -263,10 +268,18 @@ SET(CPACK_COMPONENT_SAMPLE_DESCRIPTION
 SET(CPACK_COMPONENT_SAMPLE_DEPENDS library)
 SET(CPACK_COMPONENT_SAMPLE_INSTALL_TYPES Full)
 
+SET(CPACK_COMPONENT_MAPEDITOR_DISPLAY_NAME "MapEditor")
+SET(CPACK_COMPONENT_MAPEDITOR_DESCRIPTION
+    "Risk Map Editor")
+SET(CPACK_COMPONENT_MAPEDITOR_DEPENDS library)
+SET(CPACK_COMPONENT_MAPEDITOR_INSTALL_TYPES Full)
+
+
 # used by NSIS to create startmenu links to the executables
 # this entrys are only useful if a bin folder is used, otherwise use the empty EXECUTABLES
 # and fill out the NSIS_MENU_LINKS
 SET(CPACK_PACKAGE_EXECUTABLES ${CPACK_PACKAGE_EXECUTABLES} "Sample" "Sample")
+SET(CPACK_PACKAGE_EXECUTABLES ${CPACK_PACKAGE_EXECUTABLES} "MapEditor" "MapEditor")
 
 # This must always be last!
 INCLUDE(CPack)
